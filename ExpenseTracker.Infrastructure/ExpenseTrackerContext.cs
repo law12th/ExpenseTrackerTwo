@@ -6,7 +6,7 @@ namespace ExpenseTracker.Infrastructure {
         public DbSet<Category> categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            string connectionString = "Database=INTERN1;Initial Catalog=ExpenseTracker;User id=sa";
+            string connectionString = "server=(localdb)\\mssqldb; database=ExpenseTracker";
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
