@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ExpenseTracker.Utilities.Constants;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExpenseTracker.Domain.Models {
     public class Category {
@@ -11,7 +7,7 @@ namespace ExpenseTracker.Domain.Models {
         [Key]
         public int CategoryID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = MessageConstants.RequiredError)]
         [StringLength(60)]
         [Display(Name = "Category name")]
         public string CategoryName { get; set; }
