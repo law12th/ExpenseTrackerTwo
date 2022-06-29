@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ExpenseTracker.Infrastructure {
     public class ExpenseTrackerContext: DbContext {
         public DbSet<Category> categories { get; set; }
+        public DbSet<Expense> expenses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             string connectionString = "server=(localdb)\\mssqldb; database=ExpenseTracker";
