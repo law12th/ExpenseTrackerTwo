@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExpenseTracker.Domain.Models {
-    public class Expense {
+    public class Expense: BaseModel {
 
         [Key]
         public int ExpenseID { get; set; }
@@ -11,6 +11,7 @@ namespace ExpenseTracker.Domain.Models {
         public DateTime ExpenseDate { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18, 6)")]
         public Decimal Amount { get; set; }
 
         public int CategoryID { get; set; }
