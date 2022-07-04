@@ -14,6 +14,9 @@ namespace ExpenseTracker.API.Controllers {
             this.context = context;
         }
 
+        /// <summary>
+        /// http://localhost:5239/api/asset-category/categories/
+        /// </summary> 
         [HttpGet]
         [Route(RouteConstants.Categories)]
         public async Task<IActionResult> ReadCategories() {
@@ -30,6 +33,13 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:5239/api/asset-category/category/key/{key}
+        /// </summary>
+        /// <param name="id">Primary key of the entity.</param> 
+        [HttpGet]
+        //[Route("category/key/{id}")]
+        [Route(RouteConstants.CategoryByKey + "{id}")]
         [HttpGet]
         [Route(RouteConstants.CategoryByKey + "{id}")]
         public async Task<IActionResult> ReadCategoryByKey(int id) {
@@ -49,6 +59,10 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:6600/api/asset-category/category/create
+        /// </summary>
+        /// <param name="category">Category object.</param>
         [HttpPost]
         [Route("category/create")]
         public async Task<IActionResult> CreateCategory(Category category) {
@@ -69,6 +83,11 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:5239/api/asset-category/category/update/key
+        /// </summary>
+        /// <param name="id">Primary key of the entity.</param>
+        /// <param name="category">Category object.</param>
         [HttpPut]
         [Route("category/update/{id}")]
         public async Task<IActionResult> UpdateCategory(int id, Category category) {
@@ -93,6 +112,10 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:5239/api/asset-category/category/delete/key
+        /// </summary>
+        /// <param name="id">Primary key of the entity.</param>
         [HttpDelete]
         [Route("category/delete/{id}")]
         public async Task<IActionResult> DeleteCategory(int id) {
@@ -115,6 +138,11 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// Checks if the category name is a duplicate or not.
+        /// </summary>
+        /// <param name="category">Category object.</param>
+        /// <returns>bool</returns>
         private async Task<bool> IsCategoryDuplicate(Category category) {
             try {
                 var categoryInDb = await context.Categories
@@ -130,6 +158,11 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// Checks if a category is in use or not.
+        /// </summary>
+        /// <param name="category">Category object.</param>
+        /// <returns>bool</returns>
         private async Task<bool> IsCategoryInUse(Category category) {
             try {
                 var asset = await context.Expenses
