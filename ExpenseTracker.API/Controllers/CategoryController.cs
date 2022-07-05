@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTracker.API.Controllers {
-    [Route(RouteConstants.CategoriesController)]
+    [Route(RouteConstants.Controller)]
     [ApiController]
     public class CategoryController : ControllerBase {
         private readonly ExpenseTrackerContext context;
@@ -37,9 +37,6 @@ namespace ExpenseTracker.API.Controllers {
         /// URL: http://localhost:5239/api/asset-category/category/key/{key}
         /// </summary>
         /// <param name="id">Primary key of the entity.</param> 
-        [HttpGet]
-        //[Route("category/key/{id}")]
-        [Route(RouteConstants.CategoryByKey + "{id}")]
         [HttpGet]
         [Route(RouteConstants.CategoryByKey + "{id}")]
         public async Task<IActionResult> ReadCategoryByKey(int id) {
