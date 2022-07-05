@@ -38,13 +38,13 @@ namespace ExpenseTracker.API.Controllers {
         /// </summary>
         /// <param name="id">Primary key of the entity.</param> 
         [HttpGet]
-        [Route(RouteConstants.CategoryByKey + "{id}")]
-        public async Task<IActionResult> ReadCategoryByKey(int id) {
+        [Route(RouteConstants.CategoryByKey + "{key}")]
+        public async Task<IActionResult> ReadCategoryByKey(int key) {
             try {
-                if (id <= 0)
+                if (key <= 0)
                     return StatusCode(StatusCodes.Status400BadRequest);
 
-                var category = await context.Categories.FindAsync(id);
+                var category = await context.Categories.FindAsync(key);
 
                 if (category == null)
                     return StatusCode(StatusCodes.Status404NotFound);
