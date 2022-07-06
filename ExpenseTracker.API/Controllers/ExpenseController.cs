@@ -14,6 +14,9 @@ namespace ExpenseTracker.API.Controllers {
             this.context = context;
         }
 
+        /// <summary>
+        /// http://localhost:5239/api/expense-tracker/expenses/
+        /// </summary>
         [HttpGet]
         [Route(RouteConstants.Expenses)]
         public async Task<IActionResult> ReadExpenses() {
@@ -30,6 +33,10 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:5239/api/expense-tracker/expenses/{key}
+        /// </summary>
+        /// <param name="key">Primary key of the entity.</param> 
         [HttpGet]
         [Route(RouteConstants.ExpensesByKey + "{key}")]
         public async Task<IActionResult> ReadExpenseByKey(int key) {
@@ -49,6 +56,10 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:5239/api/expense-tracker/expenses/create
+        /// </summary>
+        /// <param name="expense">Expense object.</param>
         [HttpPost]
         [Route("expenses/create")]
         public async Task<IActionResult> CreateExpense(Expense expense) {
@@ -72,6 +83,11 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:5239/api/expense-tracker/expenses/update/{key}
+        /// </summary>
+        /// <param name="id">Primary key of the entity.</param>
+        /// <param name="expense">Expense object.</param>
         [HttpPut]
         [Route("expense/update/{id}")]
         public async Task<IActionResult> UpdateExpense(int id, Expense expense) {
@@ -99,6 +115,10 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// URL: http://localhost:5239/api/expense-tracker/expenses/delete/{key}
+        /// </summary>
+        /// <param name="id">Primary key of the entity.</param>
         [HttpDelete]
         [Route("expenses/delete/{id}")]
         public async Task<IActionResult> DeleteExpense(int id) {
@@ -118,10 +138,20 @@ namespace ExpenseTracker.API.Controllers {
             }
         }
 
+        /// <summary>
+        /// Checks if the expense date is in the future or not.
+        /// </summary>
+        /// <param name="expense">Expense object.</param>
+        /// <returns>bool</returns>
         private bool isExpenseDateInFuture(Expense expense) {
                 return expense.ExpenseDate > DateTime.Now;
         }
 
+        /// <summary>
+        /// Checks if the expense amount is less than zero or not.
+        /// </summary>
+        /// <param name="expense">Expense object.</param>
+        /// <returns>bool</returns>
         private bool isExpenseAmountLessThanZero(Expense expense) {                
                 return expense.Amount <= 0;
         }
