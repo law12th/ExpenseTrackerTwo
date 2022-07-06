@@ -38,7 +38,7 @@ namespace ExpenseTracker.API.Controllers {
         /// </summary>
         /// <param name="key">Primary key of the entity.</param> 
         [HttpGet]
-        [Route(RouteConstants.CategoryByKey + "{key}")]
+        [Route(RouteConstants.Categories + "{key}")]
         public async Task<IActionResult> ReadCategoryByKey(int key) {
             try {
                 if (key <= 0)
@@ -61,7 +61,7 @@ namespace ExpenseTracker.API.Controllers {
         /// </summary>
         /// <param name="category">Category object.</param>
         [HttpPost]
-        [Route("category/create")]
+        [Route(RouteConstants.Categories + "create")]
         public async Task<IActionResult> CreateCategory(Category category) {
             try {
                 if (!ModelState.IsValid)
@@ -73,7 +73,7 @@ namespace ExpenseTracker.API.Controllers {
                 context.Categories.Add(category);
                 await context.SaveChangesAsync();
 
-                return CreatedAtAction("GetCategoryByKey", new { id = category.CategoryID }, category);
+                return CreatedAtAction("ReadCategoryByKey", new { id = category.CategoryID }, category);
             }
             catch {
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -86,7 +86,7 @@ namespace ExpenseTracker.API.Controllers {
         /// <param name="id">Primary key of the entity.</param>
         /// <param name="category">Category object.</param>
         [HttpPut]
-        [Route("category/update/{id}")]
+        [Route(RouteConstants.Categories + "update/{key}")]
         public async Task<IActionResult> UpdateCategory(int id, Category category) {
             try {
                 if (id != category.CategoryID)
@@ -114,9 +114,12 @@ namespace ExpenseTracker.API.Controllers {
         /// </summary>
         /// <param name="id">Primary key of the entity.</param>
         [HttpDelete]
-        [Route("category/delete/{id}")]
+        [Route(RouteConstants.Categories + "delete/{key}")]
         public async Task<IActionResult> DeleteCategory(int id) {
             try {
+                if (id <= 0)
+                    return StatusCode(StatusCodes.Status400BadRequest);
+
                 var category = await context.Categories.FindAsync(id);
 
                 if (category == null)
@@ -130,7 +133,7 @@ namespace ExpenseTracker.API.Controllers {
 
                 return Ok(category);
             }
-            catch (Exception) {
+            catch {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -146,10 +149,7 @@ namespace ExpenseTracker.API.Controllers {
                     .AsNoTracking()
                     .FirstOrDefaultAsync(c => c.CategoryName.ToLower() == category.CategoryName.ToLower());
 
-                if (categoryInDb == null)
-                    return true;
-
-                return false;
+                return categoryInDb == null;
             } catch {
                 throw;
             }
@@ -162,14 +162,11 @@ namespace ExpenseTracker.API.Controllers {
         /// <returns>bool</returns>
         private async Task<bool> IsCategoryInUse(Category category) {
             try {
-                var asset = await context.Expenses
+                var expense = await context.Expenses
                     .AsNoTracking()
                     .FirstOrDefaultAsync(a => a.CategoryID == category.CategoryID);
 
-                if (asset != null)
-                    return true;
-
-                return false;
+                return expense != null;
             }
             catch {
                 throw;

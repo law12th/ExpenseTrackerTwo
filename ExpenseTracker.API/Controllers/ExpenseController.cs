@@ -38,7 +38,7 @@ namespace ExpenseTracker.API.Controllers {
         /// </summary>
         /// <param name="key">Primary key of the entity.</param> 
         [HttpGet]
-        [Route(RouteConstants.ExpensesByKey + "{key}")]
+        [Route(RouteConstants.Expenses + "{key}")]
         public async Task<IActionResult> ReadExpenseByKey(int key) {
             try {
                 if (key <= 0)
@@ -57,7 +57,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/expenses/create
+        /// URL: http://localhost:5239/api/expense-tracker/expenses/create/
         /// </summary>
         /// <param name="expense">Expense object.</param>
         [HttpPost]
@@ -123,6 +123,9 @@ namespace ExpenseTracker.API.Controllers {
         [Route("expenses/delete/{id}")]
         public async Task<IActionResult> DeleteExpense(int id) {
             try {
+                if (id <= 0)
+                    return StatusCode(StatusCodes.Status400BadRequest);
+
                 var expense = await context.Expenses.FindAsync(id);
 
                 if (expense == null)
@@ -133,7 +136,7 @@ namespace ExpenseTracker.API.Controllers {
 
                 return Ok(expense);
             }
-            catch (Exception) {
+            catch {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
