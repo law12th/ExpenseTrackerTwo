@@ -15,7 +15,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// http://localhost:5239/api/expense-tracker/categories/
+        /// http://localhost:6000/api/expense-tracker/categories/
         /// </summary> 
         [HttpGet]
         [Route(RouteConstants.Categories)]
@@ -34,7 +34,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/categories/{key}
+        /// URL: http://localhost:6000/api/expense-tracker/categories/{key}
         /// </summary>
         /// <param name="key">Primary key of the entity.</param> 
         [HttpGet]
@@ -57,7 +57,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/categories/create/
+        /// URL: http://localhost:6000/api/expense-tracker/categories/create/
         /// </summary>
         /// <param name="category">Category object.</param>
         [HttpPost]
@@ -81,7 +81,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/categories/update/{key}
+        /// URL: http://localhost:6000/api/expense-tracker/categories/update/{key}
         /// </summary>
         /// <param name="id">Primary key of the entity.</param>
         /// <param name="category">Category object.</param>
@@ -110,7 +110,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/categories/delete/{key}
+        /// URL: http://localhost:6000/api/expense-tracker/categories/delete/{key}
         /// </summary>
         /// <param name="id">Primary key of the entity.</param>
         [HttpDelete]

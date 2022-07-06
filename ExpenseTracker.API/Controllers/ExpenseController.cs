@@ -15,7 +15,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// http://localhost:5239/api/expense-tracker/expenses/
+        /// http://localhost:6000/api/expense-tracker/expenses/
         /// </summary>
         [HttpGet]
         [Route(RouteConstants.Expenses)]
@@ -34,7 +34,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/expenses/{key}
+        /// URL: http://localhost:6000/api/expense-tracker/expenses/{key}
         /// </summary>
         /// <param name="key">Primary key of the entity.</param> 
         [HttpGet]
@@ -57,7 +57,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/expenses/create/
+        /// URL: http://localhost:6000/api/expense-tracker/expenses/create/
         /// </summary>
         /// <param name="expense">Expense object.</param>
         [HttpPost]
@@ -67,10 +67,10 @@ namespace ExpenseTracker.API.Controllers {
                 if (!ModelState.IsValid)
                     return StatusCode(StatusCodes.Status400BadRequest);
 
-                if (isExpenseDateInFuture(expense))
+                if (expense.ExpenseDate > DateTime.Now)
                     return StatusCode(StatusCodes.Status400BadRequest);
 
-                if (isExpenseAmountLessThanZero(expense))
+                if (expense.Amount <= 0)
                     return StatusCode(StatusCodes.Status400BadRequest);
 
                 context.Expenses.Add(expense);
@@ -84,7 +84,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/expenses/update/{key}
+        /// URL: http://localhost:6000/api/expense-tracker/expenses/update/{key}
         /// </summary>
         /// <param name="id">Primary key of the entity.</param>
         /// <param name="expense">Expense object.</param>
@@ -98,10 +98,10 @@ namespace ExpenseTracker.API.Controllers {
                 if (!ModelState.IsValid)
                     return StatusCode(StatusCodes.Status400BadRequest);
 
-                if (isExpenseDateInFuture(expense))
+                if (expense.ExpenseDate > DateTime.Now)
                     return StatusCode(StatusCodes.Status400BadRequest);
 
-                if (isExpenseAmountLessThanZero(expense))
+                if (expense.Amount <= 0)
                     return StatusCode(StatusCodes.Status400BadRequest);
 
                 context.Entry(expense).State = EntityState.Modified;
@@ -116,7 +116,7 @@ namespace ExpenseTracker.API.Controllers {
         }
 
         /// <summary>
-        /// URL: http://localhost:5239/api/expense-tracker/expenses/delete/{key}
+        /// URL: http://localhost:6000/api/expense-tracker/expenses/delete/{key}
         /// </summary>
         /// <param name="id">Primary key of the entity.</param>
         [HttpDelete]
@@ -139,24 +139,6 @@ namespace ExpenseTracker.API.Controllers {
             catch {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-        }
-
-        /// <summary>
-        /// Checks if the expense date is in the future or not.
-        /// </summary>
-        /// <param name="expense">Expense object.</param>
-        /// <returns>bool</returns>
-        private bool isExpenseDateInFuture(Expense expense) {
-                return expense.ExpenseDate > DateTime.Now;
-        }
-
-        /// <summary>
-        /// Checks if the expense amount is less than zero or not.
-        /// </summary>
-        /// <param name="expense">Expense object.</param>
-        /// <returns>bool</returns>
-        private bool isExpenseAmountLessThanZero(Expense expense) {                
-                return expense.Amount <= 0;
         }
     }    
 }
