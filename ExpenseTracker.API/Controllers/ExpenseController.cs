@@ -61,7 +61,7 @@ namespace ExpenseTracker.API.Controllers {
         /// </summary>
         /// <param name="expense">Expense object.</param>
         [HttpPost]
-        [Route("expenses/create")]
+        [Route(RouteConstants.Expenses + "create/")]
         public async Task<IActionResult> CreateExpense(Expense expense) {
             try {
                 if (!ModelState.IsValid)
@@ -89,7 +89,7 @@ namespace ExpenseTracker.API.Controllers {
         /// <param name="id">Primary key of the entity.</param>
         /// <param name="expense">Expense object.</param>
         [HttpPut]
-        [Route("expense/update/{id}")]
+        [Route(RouteConstants.Expenses + "update/{key}")]
         public async Task<IActionResult> UpdateExpense(int id, Expense expense) {
             try {
                 if (id != expense.ExpenseID)
@@ -120,7 +120,7 @@ namespace ExpenseTracker.API.Controllers {
         /// </summary>
         /// <param name="id">Primary key of the entity.</param>
         [HttpDelete]
-        [Route("expenses/delete/{id}")]
+        [Route(RouteConstants.Expenses + "delete/{key}")]
         public async Task<IActionResult> DeleteExpense(int id) {
             try {
                 if (id <= 0)
